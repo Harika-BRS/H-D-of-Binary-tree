@@ -6,36 +6,49 @@ function findTreeHeight() {
     const height = calculateHeight(root);
     const treeHeightDiv = document.getElementById("treeHeight");
     treeHeightDiv.textContent = "Height of the binary tree: " + height;
-  }
-  // Function to build binary tree from array
-  function buildTree(values) {
+}
+
+// Function to build binary tree from array
+function buildTree(values) {
     if (values.length === 0) return null;
     const root = { val: parseInt(values[0]), left: null, right: null };
     const queue = [root];
     for (let i = 1; i < values.length; i += 2) {
-      const current = queue.shift();
-      if (values[i] !== "null") {
-        current.left = { val: parseInt(values[i]), left: null, right: null };
-        queue.push(current.left);
-      }
-      if (i + 1 < values.length && values[i + 1] !== "null") {
-        current.right = { val: parseInt(values[i + 1]), left: null, right: null };
-        queue.push(current.right);
-      }
+        const current = queue.shift();
+        if (values[i] !== "null") {
+            current.left = { val: parseInt(values[i]), left: null, right: null };
+            queue.push(current.left);
+        }
+        if (i + 1 < values.length && values[i + 1] !== "null") {
+            current.right = { val: parseInt(values[i + 1]), left: null, right: null };
+            queue.push(current.right);
+        }
     }
     return root;
-  }
-  // Function to calculate the height of a binary tree
-  function calculateHeight(root) {
+}
+
+// Function to calculate the height of a binary tree
+function calculateHeight(root) {
     if (!root) return 0;
     const leftHeight = calculateHeight(root.left);
     const rightHeight = calculateHeight(root.right);
     return Math.max(leftHeight, rightHeight) + 1;
-  }
+}
 
-// Add this script to clear the input field on page load
-document.addEventListener('DOMContentLoaded', function() {
-    var treeInput = document.getElementById('treeInput');
-    treeInput.value = ''; // Set the input value to an empty string
-  });
-  
+// Function to clear input fields
+function clearInputFields() {
+    document.getElementById('treeInput').value = '';
+}
+
+// Add event listener for window.onload event to clear input fields
+window.onload = clearInputFields;
+
+// Add event listener for "keypress" event to input field
+document.getElementById("treeInput").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        findTreeHeight();
+    }
+});
+
+// Add event listener for button click
+document.getElementById("findHeightButton").addEventListener("click", findTreeHeight);
